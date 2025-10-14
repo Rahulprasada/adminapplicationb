@@ -1,5 +1,5 @@
 Flask
-SQLAlchemy
+Flask-SQLAlchemy
 gunicorn
-datetime
 flask-cors
+DateTime
