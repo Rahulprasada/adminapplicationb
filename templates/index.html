@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aton Wealth Management — Research Calls</title>
+  <style>
+    /* ---------- Base ---------- */
+    :root{
+      --blue: #0a2540;
+      --accent: #ffd700;
+      --muted: #6b7280;
+      --card-bg: rgba(255,255,255,0.1);
+      --glass: rgba(255,255,255,0.05);
+      --radius: 12px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      background: #f9fafb;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
+    .container{width:90%;max-width:1200px;margin:0 auto}
+
+    /* ---------- Header / Hero ---------- */
+    header.header{
+      background: linear-gradient(180deg, rgba(10,37,64,0.95) 0%, rgba(10,37,64,0.8) 50%, rgba(255,215,0,0.1) 100%), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMDAwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMDBkZmYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMCIvPjwvbGluZWFyR3JhZGllbnQ+PHBhdGggZmlsbD0idXJsKCNncmFkKSIgZD0iTTAsMzAwaDExMDBjMCwwLTUzMS4zLTI1Ni43LTU1MC0yNTZDMjM5LDE5MCw5OSwzMDAsMCwzMDB6Ii8+PC9zdmc+') no-repeat center bottom / cover;
+      color: #fff;
+      padding-bottom:80px;
+      position:relative;
+      overflow:hidden;
+    }
+    header .top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:20px 0;
+    }
+    .logo{
+      font-size:24px;
+      font-weight:800;
+      color: #fff;
+      letter-spacing:0.5px;
+    }
+    nav a{
+      color: rgba(255,255,255,0.9);
+      text-decoration:none;
+      margin-left:20px;
+      font-weight:600;
+      font-size:15px;
+      transition: color 0.3s;
+    }
+    nav a:hover{
+      color: var(--accent);
+    }
+    .hero{
+      text-align:center;
+      padding:60px 0 80px;
+    }
+    .hero h1{
+      font-size:40px;
+      margin:0 0 10px;
+      font-weight:800;
+      color: #fff;
+    }
+    .hero p{
+      color: rgba(255,255,255,0.9);
+      max-width:800px;
+      margin:0 auto 25px;
+      font-size:18px;
+    }
+    .hero .cta{
+      display:inline-flex;
+      gap:15px;
+      margin-top:20px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:12px 24px;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+      border:none;
+      font-size:15px;
+      transition: all 0.3s;
+    }
+    .btn-primary{
+      background: linear-gradient(90deg, #ffd700, #ffcc00);
+      color: var(--blue);
+      box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+    }
+    .btn-primary:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255,215,0,0.4);
+    }
+    .btn-ghost{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.3);
+      color:#fff;
+    }
+    .btn-ghost:hover{
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* decorative wave */
+    header::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:100px;
+      bottom:0;
+      background: linear-gradient(180deg, transparent, #f9fafb);
+      transform: skewY(-2deg);
+      pointer-events:none;
+    }
+
+    /* ---------- Proven Track Record cards ---------- */
+    .metrics{
+      transform:translateY(-40px);
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .metric{
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      padding:20px 30px;
+      border-radius:var(--radius);
+      min-width:200px;
+      text-align:center;
+      color:#fff;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.3s;
+    }
+    .metric:hover{
+      transform: translateY(-5px);
+      cursor: pointer;
+    }
+    .metric .num{
+      font-size:32px;
+      font-weight:800;
+      margin:10px 0;
+    }
+    .metric .label{
+      font-size:14px;
+      color:rgba(255,255,255,0.8);
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+    .metric .sub-label{
+      font-size:13px;
+      color:rgba(255,255,255,0.7);
+    }
+
+    /* ---------- main content ---------- */
+    main.main{
+      margin-top:40px;
+      padding:60px 0;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:var(--radius);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      padding:25px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:40px;
+    }
+    .section-title h3{
+      font-size:28px;
+      font-weight:700;
+      margin:0 0 10px;
+      color: var(--blue);
+    }
+    .section-title p{
+      color:var(--muted);
+      font-size:16px;
+      max-width:700px;
+      margin:0 auto;
+      height: 70px;
+    }
+
+    /* table area style */
+    .table-area{
+      display:flex;
+      justify-content:center;
+    }
+    .table-wrapper{
+      width:100%;
+      max-width:1000px;
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    table#stocks{
+      width:100%;
+      border-collapse:collapse;
+      font-size:14px;
+      color:#333;
+    }
+    table#stocks thead th{
+      background:#f3f4f6;
+      text-align:left;
+      padding:15px;
+      font-weight:600;
+      border-bottom:2px solid #e5e7eb;
+      font-size:13px;
+      color:#4b5563;
+      text-transform:uppercase;
+    }
+    table#stocks tbody td{
+      padding:15px;
+      border-bottom:1px solid #f3f4f6;
+      vertical-align:middle;
+    }
+    table#stocks tbody tr:last-child td{
+      border-bottom:none;
+    }
+    table#stocks tbody tr:hover{
+      background:#f9fafb;
+    }
+    .pill{
+      display:inline-block;
+      padding:6px 12px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:12px;
+      text-transform:capitalize;
+    }
+    .pill.active{
+      background:#3b82f6;
+      color:#fff;
+    }
+    .pill.completed{
+      background:#dcfce7;
+      color:#15803d;
+    }
+    .value-up{
+      color:#15803d;
+      font-weight:600;
+    }
+    .value-down{
+      color:#ef4444;
+      font-weight:600;
+    }
+
+    /* ---------- Why choose cards ---------- */
+    .why{
+      margin-top:60px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+    .why .why-card{
+      background:#fff;
+      border-radius:var(--radius);
+      padding:25px;
+      box-shadow:0 10px 20px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+      position:relative;
+    }
+    .why .why-card:hover{
+      transform: translateY(-5px);
+      box-shadow:0 12px 25px rgba(0,0,0,0.1);
+    }
+    .why .why-card .icon{
+      width:50px;
+      height:50px;
+      background:var(--accent);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:15px;
+      font-size:24px;
+      color:var(--blue);
+    }
+    .why .why-card h4{
+      margin:0 0 10px;
+      font-size:18px;
+      font-weight:700;
+      color:var(--blue);
+    }
+    .why .why-card p{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* footer */
+    footer.site-footer{
+      text-align:center;
+      padding:40px 0;
+      color:var(--muted);
+      font-size:14px;
+      border-top:1px solid #e5e7eb;
+      margin-top:80px;
+    }
+
+    /* responsive */
+    @media (max-width:900px){
+      .metrics{gap:15px;padding:0 15px;}
+      .hero{padding:40px 15px;h1{font-size:32px;}}
+      .table-wrapper{max-width:100%;overflow-x:auto;}
+      .why{gap:15px;}
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header + Hero -->
+  <header class="header">
+    <div class="container top">
+      <div class="logo">Aton Wealth Management</div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/admin">Admin</a>
+      </nav>
+    </div>
+
+    <div class="container hero">
+      <h1>Illuminate Your Investment Journey</h1>
+      <p>with Expert Research & Proven Strategies</p>
+      <div class="cta">
+        <button class="btn btn-primary" onclick="scrollToTable()">View Research Calls</button>
+        <button class="btn btn-ghost" onclick="openLearn()">Learn More</button>
+      </div>
+
+      <!-- Metrics row (Proven Track Record) -->
+      <div class="section-title" style="margin-top:60px;margin-bottom:20px;">
+        <h3 style="font-size:24px;color:#fff;">Proven Track Record</h3>
+        <p style="color:rgba(255,255,255,0.8);font-size:16px;">Our research speaks for itself with consistent results and satisfied investors</p>
+      </div>
+      <div class="metrics" id="metrics">
+        <div class="metric">
+          <div class="num" id="m-success">—</div>
+          <div class="label">Success Rate</div>
+          <div class="sub-label">Winning trades</div>
+        </div>
+        <div class="metric">
+          <div class="num" id="m-calls">—</div>
+          <div class="label">Research Calls</div>
+          <div class="sub-label">Published annually</div>
+        </div>
+        <div class="metric">
+          <div class="num" id="m-years">15+</div>
+          <div class="label">Years Experience</div>
+          <div class="sub-label">Market expertise</div>
+        </div>
+        <div class="metric">
+          <div class="num" id="m-users">5000+</div>
+          <div class="label">Active Investors</div>
+          <div class="sub-label">Trust our research</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="container">
+      <!-- Latest Research Calls -->
+      <section class="section">
+        <div class="section-title">
+          <h3>Latest Research Calls</h3>
+          <p>Track our expert stock recommendations with transparent entry, targets, and exit points</p>
+        </div>
+
+        <div class="table-area">
+          <div class="table-wrapper">
+            <table id="stocks" aria-live="polite">
+              <thead>
+                <tr>
+                  <th style="width:120px">Entry Date</th>
+                  <th>Stock</th>
+                  <th>Entry Price</th>
+                  <th>Target</th>
+                  <th style="width:120px">Stop Loss</th>
+                  <th style="width:120px">Exit Date</th>
+                  <th style="width:90px">Points</th>
+                  <th style="width:100px">Status</th>
+                </tr>
+              </thead>
+              <tbody id="stocks-body">
+                <tr><td colspan="9" style="text-align:center;padding:30px;color:var(--muted)">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why choose -->
+      <section>
+        <div class="section-title">
+          <h3>Why Choose Aton Wealth Management</h3>
+          <p>We provide everything you need to succeed in your investment journey</p>
+        </div>
+
+        <div class="why">
+          <div class="why-card">
+            <div class="icon">📈</div>
+            <h4>Buy and Sell Signals</h4>
+            <p>Receive clear buy/sell rules with entry, target and stop-loss for disciplined execution.</p>
+          </div>
+          <div class="why-card">
+            <div class="icon">🤖</div>
+            <h4>AI Algorithms</h4>
+            <p>Advanced algorithms and pattern analysis to support our research and filter high-probability trades.</p>
+          </div>
+          <div class="why-card">
+            <div class="icon">🔍</div>
+            <h4>Stock Analysis</h4>
+            <p>Fundamental and technical checks to validate calls — we focus on risk-adjusted performance.</p>
+          </div>
+          <div class="why-card">
+            <div class="icon">🛡️</div>
+            <h4>Risk Management</h4>
+            <p>Risk management is central — strict stop-loss and clear targets keep losses small and wins large.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>&copy; 2025 Aton Wealth Management. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // API endpoint - change when you deploy
+    const API_ENDPOINT = "http://127.0.0.1:5000/stocks";
+
+    // Utility: format currency
+    function formatMoney(v){
+      if (v === null || v === undefined || v === '') return '-';
+      const n = Number(v);
+      if (isNaN(n)) return '-';
+      return '₹' + n.toLocaleString(undefined, {maximumFractionDigits:2, minimumFractionDigits:0});
+    }
+
+    // Populate table with stocks from backend
+    async function loadStocks(){
+      const tbody = document.getElementById('stocks-body');
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--muted)">Loading...</td></tr>`;
+      try {
+        const res = await fetch(API_ENDPOINT, {cache: "no-store"});
+        if (!res.ok) throw new Error('Network response was not ok: ' + res.statusText);
+        const stocks = await res.json();
+
+        if (!Array.isArray(stocks) || stocks.length === 0){
+          tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--muted)">No research calls available.</td></tr>`;
+        } else {
+          // Fill rows
+          tbody.innerHTML = '';
+          stocks.forEach(s => {
+            const entry = s.entry_date || '-';
+            const exit = s.exit_date || '-';
+            const price = (s.entry_price != null) ? Number(s.entry_price).toFixed(2) : '-';
+            const target = (s.target != null) ? Number(s.target).toFixed(2) : '-';
+            const stop = (s.stop_loss != null) ? Number(s.stop_loss).toFixed(2) : '-';
+            const points = (s.points != null && s.points !== '') ? (s.points > 0 ? '+' + s.points : s.points) : '-';
+            const pointsClass = points > 0 ? 'value-up' : (points < 0 ? 'value-down' : '');
+            const profit = (s.profit_money != null && s.profit_money !== '') ? '₹' + Number(s.profit_money).toLocaleString() : '-';
+            const profitClass = s.profit_money > 0 ? 'value-up' : (s.profit_money < 0 ? 'value-down' : '');
+            const status = (s.status || 'Active');
+            const statusClass = status.toLowerCase() === 'active' ? 'pill active' : 'pill completed';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${entry}</td>
+              <td style="font-weight:600">${escapeHtml(s.stock_name || '-')}</td>
+              <td>${price === '-' ? '-' : '₹' + price}</td>
+              <td>₹${target}</td>
+              <td>₹${stop}</td>
+              <td>${exit}</td>
+              <td class="${pointsClass}" style="text-align:center">${points}</td>
+              <td style="text-align:center"><span class="${statusClass}">${status}</span></td>
+            `;
+            tbody.appendChild(row);
+          });
+        }
+
+        // Update metrics
+        updateMetricsFromStocks(stocks);
+
+      } catch (err){
+        console.error(err);
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--muted)">Failed to load data — check backend.</td></tr>`;
+        setMetric('m-calls', '0');
+        setMetric('m-success', '-');
+      }
+    }
+
+    // Escape HTML
+    function escapeHtml(unsafe) {
+      if (unsafe === null || unsafe === undefined) return '';
+      return String(unsafe)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Update metrics
+    function updateMetricsFromStocks(stocks){
+      if (!Array.isArray(stocks)) {
+        setMetric('m-calls', '0');
+        setMetric('m-success', '-');
+        return;
+      }
+
+      setMetric('m-calls', stocks.length + '+');
+
+      const completed = stocks.filter(s => (s.status || '').toLowerCase() === 'completed');
+      if (completed.length === 0) {
+        setMetric('m-success', '—');
+        return;
+      }
+      const winners = completed.filter(s => Number(s.points) > 0);
+      const rate = Math.round((winners.length / completed.length) * 100);
+      setMetric('m-success', rate + '%');
+    }
+
+    function setMetric(id, text){ const el = document.getElementById(id); if(el) el.innerText = text; }
+
+    // UI actions
+    function scrollToTable(){
+      const el = document.querySelector('#stocks');
+      if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    function openLearn(){ window.location.href = '/learn'; } // Assume a learn page
+
+    // Load on ready
+    document.addEventListener('DOMContentLoaded', loadStocks);
+  </script>
+</body>
+</html>

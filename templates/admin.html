@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aton Wealth Management - Admin Panel</title>
+    <style>
+        /* ---------- Base ---------- */
+        :root{
+          --blue: #0a2540;
+          --accent: #ffd700;
+          --muted: #6b7280;
+          --card-bg: rgba(255,255,255,0.1);
+          --glass: rgba(255,255,255,0.05);
+          --radius: 12px;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+          margin:0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          color: #333;
+          background: #f9fafb;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          line-height: 1.6;
+        }
+        .container{width:90%;max-width:1200px;margin:0 auto;padding:20px;}
+
+        /* ---------- Header / Hero ---------- */
+        header.header{
+          background: linear-gradient(180deg, rgba(10,37,64,0.95) 0%, rgba(10,37,64,0.8) 50%, rgba(255,215,0,0.1) 100%), url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxMDAwIDUwMCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMDBkZmYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwMDAwMDAiIHN0b3Atb3BhY2l0eT0iMCIvPjwvbGluZWFyR3JhZGllbnQ+PHBhdGggZmlsbD0idXJsKCNncmFkKSIgZD0iTTAsMzAwaDExMDBjMCwwLTUzMS4zLTI1Ni43LTU1MC0yNTZDMjM5LDE5MCw5OSwzMDAsMCwzMDB6Ii8+PC9zdmc+') no-repeat center bottom / cover;
+          color: #fff;
+          padding:40px 0;
+          position:relative;
+          overflow:hidden;
+          text-align:center;
+        }
+        header.header h1{
+          font-size:32px;
+          margin:0 0 10px;
+          font-weight:800;
+        }
+        header.header p{
+          color: rgba(255,255,255,0.9);
+          font-size:16px;
+          max-width:800px;
+          margin:0 auto;
+        }
+
+        /* decorative wave */
+        header::after{
+          content:"";
+          position:absolute;
+          left:0;
+          right:0;
+          height:100px;
+          bottom:0;
+          background: linear-gradient(180deg, transparent, #f9fafb);
+          transform: skewY(-2deg);
+          pointer-events:none;
+        }
+
+        /* ---------- main content ---------- */
+        main.main{
+          padding:40px 0;
+        }
+
+        .card{
+          background:#fff;
+          border-radius:var(--radius);
+          box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+          padding:25px;
+        }
+
+        .section-title{
+          text-align:center;
+          margin-bottom:40px;
+        }
+        .section-title h2{
+          font-size:24px;
+          font-weight:700;
+          margin:0 0 10px;
+          color: var(--blue);
+        }
+
+        /* form styles */
+        #admin-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight:600;
+            font-size:14px;
+        }
+        #admin-form input, #admin-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+            border-radius:8px;
+            font-size: 14px;
+            background:#f9fafb;
+            transition: border 0.3s;
+        }
+        #admin-form input:focus, #admin-form select:focus {
+            border-color: var(--accent);
+            outline:none;
+        }
+        #admin-form button {
+            width:100%;
+            padding: 12px 24px;
+            border-radius:999px;
+            font-weight:700;
+            cursor:pointer;
+            border:none;
+            font-size:15px;
+            transition: all 0.3s;
+            background: linear-gradient(90deg, #ffd700, #ffcc00);
+            color: var(--blue);
+            box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+        }
+        #admin-form button:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255,215,0,0.4);
+        }
+
+        /* table area style */
+        .table-area{
+          display:flex;
+          justify-content:center;
+        }
+        .table-wrapper{
+          width:100%;
+          max-width:1000px;
+          border-radius:var(--radius);
+          overflow:hidden;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        table#stock-table{
+          width:100%;
+          border-collapse:collapse;
+          font-size:14px;
+          color:#333;
+        }
+        table#stock-table thead th{
+          background:#f3f4f6;
+          text-align:left;
+          padding:15px;
+          font-weight:600;
+          border-bottom:2px solid #e5e7eb;
+          font-size:13px;
+          color:#4b5563;
+          text-transform:uppercase;
+        }
+        table#stock-table tbody td{
+          padding:15px;
+          border-bottom:1px solid #f3f4f6;
+          vertical-align:middle;
+        }
+        table#stock-table tbody tr:last-child td{
+          border-bottom:none;
+        }
+        table#stock-table tbody tr:hover{
+          background:#f9fafb;
+        }
+        .status-active{
+          display:inline-block;
+          padding:6px 12px;
+          border-radius:999px;
+          font-weight:600;
+          font-size:12px;
+          text-transform:capitalize;
+          background:#3b82f6;
+          color:#fff;
+        }
+        .status-completed{
+          display:inline-block;
+          padding:6px 12px;
+          border-radius:999px;
+          font-weight:600;
+          font-size:12px;
+          text-transform:capitalize;
+          background:#dcfce7;
+          color:#15803d;
+        }
+
+        /* button styles for edit and delete */
+        .btn-edit, .btn-delete {
+          padding: 6px 12px;
+          border-radius: 999px;
+          font-weight: 600;
+          cursor: pointer;
+          border: none;
+          font-size: 12px;
+          transition: all 0.3s;
+          margin-right: 8px;
+        }
+        .btn-edit {
+          background: linear-gradient(90deg, #3b82f6, #2563eb);
+          color: #fff;
+          box-shadow: 0 2px 6px rgba(59,130,246,0.2);
+          margin-bottom: 20px;
+        }
+        .btn-edit:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(59,130,246,0.3);
+        }
+        .btn-delete {
+          background: linear-gradient(90deg, #ef4444, #dc2626);
+          color: #fff;
+          box-shadow: 0 2px 6px rgba(239,68,68,0.2);
+        }
+        .btn-delete:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(239,68,68,0.3);
+        }
+
+        /* responsive */
+        @media (max-width:900px){
+          .container{padding:15px;}
+          .table-wrapper{overflow-x:auto;}
+        }
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Admin Panel - Stock Management</h1>
+            <p>Add or update research calls here. Stocks will automatically appear on the home page.</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div id="admin-form" class="card">
+                <div class="section-title">
+                    <h2>Add / Update Stock</h2>
+                </div>
+                <form id="stock-form">
+                    <input type="hidden" id="stock-id" name="id">
+
+                    <label for="entry-date">Entry Date (DD/MM/YYYY):</label>
+                    <input type="text" id="entry-date" name="entry_date" required placeholder="e.g., 29/09/2025">
+
+                    <label for="stock-name">Stock Name:</label>
+                    <input type="text" id="stock-name" name="stock_name" required placeholder="e.g., YESBANK">
+
+                    <label for="entry-price">Entry Price (₹):</label>
+                    <input type="number" id="entry-price" name="entry_price" step="0.01" required placeholder="e.g., 21.1">
+
+                    <label for="target">Target (↑ ₹):</label>
+                    <input type="number" id="target" name="target" step="0.01" required placeholder="e.g., 23.7">
+
+                    <label for="stop-loss">Stop Loss (↓ ₹):</label>
+                    <input type="number" id="stop-loss" name="stop_loss" step="0.01" required placeholder="e.g., 20">
+
+                    <label for="exit-date">Exit Date (DD/MM/YYYY, optional):</label>
+                    <input type="text" id="exit-date" name="exit_date" placeholder="e.g., 25/09/2025">
+
+                    <label for="points">Points (+/-, optional):</label>
+                    <input type="number" id="points" name="points" step="1" placeholder="e.g., +180">
+
+                    <label for="profit-money">Profit Money (₹, optional):</label>
+                    <input type="number" id="profit-money" name="profit_money" step="1" placeholder="e.g., 18000">
+
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="Active">Active</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <div class="table-area" style="margin-top:40px;">
+                <div class="table-wrapper">
+                    <table id="stock-table">
+                        <thead>
+                            <tr>
+                                <th>Entry Date</th>
+                                <th>Stock</th>
+                                <th>Entry Price</th>
+                                <th>Target</th>
+                                <th>Stop Loss</th>
+                                <th>Exit Date</th>
+                                <th>Points</th>
+                                <th>Profit Money</th>
+                                <th>Status</th>
+                                <th style="width:150px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = 'http://127.0.0.1:5000';
+
+        async function loadStocks() {
+            try {
+                const res = await fetch(`${API_URL}/stocks`);
+                const data = await res.json();
+                const tbody = document.querySelector('#stock-table tbody');
+                tbody.innerHTML = '';
+
+                data.forEach(stock => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${stock.entry_date || '-'}</td>
+                        <td style="font-weight:600">${stock.stock_name}</td>
+                        <td>₹${stock.entry_price.toFixed(2)}</td>
+                        <td>₹${stock.target.toFixed(2)}</td>
+                        <td>₹${stock.stop_loss.toFixed(2)}</td>
+                        <td>${stock.exit_date || '-'}</td>
+                        <td>${stock.points ? (stock.points > 0 ? '+' : '') + stock.points : '-'}</td>
+                        <td>${stock.profit_money ? '₹' + stock.profit_money.toLocaleString() : '-'}</td>
+                        <td><span class="status-${stock.status.toLowerCase()}">${stock.status}</span></td>
+                        <td>
+                            <button class="btn-edit" onclick='editStock(${JSON.stringify(stock)})'>Edit</button>
+                            <button class="btn-delete" onclick="deleteStock(${stock.id})">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (err) {
+                console.error('Error loading stocks:', err);
+            }
+        }
+
+        function editStock(stock) {
+            document.getElementById('stock-id').value = stock.id || '';
+            document.getElementById('entry-date').value = stock.entry_date || '';
+            document.getElementById('stock-name').value = stock.stock_name || '';
+            document.getElementById('entry-price').value = stock.entry_price || '';
+            document.getElementById('target').value = stock.target || '';
+            document.getElementById('stop-loss').value = stock.stop_loss || '';
+            document.getElementById('exit-date').value = stock.exit_date || '';
+            document.getElementById('points').value = stock.points || '';
+            document.getElementById('profit-money').value = stock.profit_money || '';
+            document.getElementById('status').value = stock.status || 'Active';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function deleteStock(id) {
+            if (confirm('Are you sure you want to delete this stock?')) {
+                try {
+                    const res = await fetch(`${API_URL}/admin/stock/${id}`, {
+                        method: 'DELETE'
+                    });
+                    if (res.ok) {
+                        alert('Stock deleted successfully!');
+                        loadStocks();
+                    } else {
+                        const errData = await res.json();
+                        alert('Error: ' + errData.error);
+                    }
+                } catch (err) {
+                    console.error('Error deleting stock:', err);
+                    alert('Deletion failed.');
+                }
+            }
+        }
+        
+
+        document.getElementById('stock-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            const method = data.id ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(`${API_URL}/admin/stock`, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    alert(method === 'POST' ? 'Stock added!' : 'Stock updated!');
+                    e.target.reset();
+                    document.getElementById('stock-id').value = '';
+                    loadStocks();
+                } else {
+                    const errData = await res.json();
+                    alert('Error: ' + errData.error);
+                }
+            } catch (err) {
+                console.error('Error submitting form:', err);
+                alert('Submission failed.');
+            }
+        });
+
+        loadStocks();
+    </script>
+</body>
+</html>
