@@ -1,0 +1,132 @@
+<!-- templates/screener_results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aton Wealth Management — Screener Results</title>
+  <style>
+    /* Reuse styles */
+    :root{
+      --blue: #0a2540;
+      --accent: #ffd700;
+      --muted: #6b7280;
+      --success: #10b981;
+      --danger: #ef4444;
+      --radius: 12px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      background: #f9fafb;
+      line-height: 1.6;
+    }
+    .container{width:90%;max-width:1200px;margin:0 auto;padding:20px 0;}
+    header.site-header{
+      background: var(--blue);
+      color: #fff;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .top-nav{display: flex; align-items: center; justify-content: space-between;}
+    .logo{font-size: 24px; font-weight: 800; color: #fff;}
+    nav.main-nav a{color: rgba(255,255,255,0.9); text-decoration: none; margin-left: 20px; font-weight: 600; padding: 8px 16px; border-radius: 20px;}
+    nav.main-nav a:hover, nav.main-nav a.active{color: var(--accent); background: rgba(255,215,0,0.1);}
+    .results-header{padding: 40px 0; background: var(--blue); color: #fff; text-align: center;}
+    .results-header h1{font-size: 32px; margin: 0 0 10px;}
+    .back-btn{color: var(--accent); text-decoration: none; font-weight: 600;}
+    .table-wrapper{background: #fff; border-radius: var(--radius); box-shadow: 0 10px 25px rgba(0,0,0,0.05); overflow: hidden; margin: 20px 0;}
+    table{width: 100%; border-collapse: collapse; font-size: 14px;}
+    th, td{padding: 15px; text-align: left; border-bottom: 1px solid #e5e7eb;}
+    th{background: #f3f4f6; font-weight: 600; color: #4b5563; text-transform: uppercase; font-size: 12px;}
+    tr:hover{background: #f9fafb;}
+    .change-positive{color: var(--success);}
+    .change-negative{color: var(--danger);}
+    .search-input{padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; margin-right: 10px;}
+    .pagination{display: flex; justify-content: center; align-items: center; gap: 10px; padding: 20px;}
+    .page-btn{background: #f3f4f6; border: 1px solid #e5e7eb; padding: 8px 12px; border-radius: 6px; cursor: pointer;}
+    .page-btn.active{background: var(--blue); color: #fff; border-color: var(--blue);}
+    footer.site-footer{text-align: center; padding: 40px 0; color: var(--muted); font-size: 14px; border-top: 1px solid #e5e7eb; margin-top: 80px;}
+    @media (max-width: 768px){.container{padding: 10px;}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="top-nav">
+        <div class="logo">Aton Wealth Management</div>
+        <nav class="main-nav">
+          <a href="/">Home</a>
+          <a href="/opensignal">Open Signals</a>
+          <a href="/performance">Signal Performance</a>
+          <a href="/screener" class="active">Stock Screener</a>
+          <a href="/account">My Account</a>
+          <a href="/subscribe">Subscribe</a>
+          <a href="/admin">Admin</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="results-header">
+    <div class="container">
+      <a href="/screener" class="back-btn">&larr; Back to Screener</a>
+      <h1>{{ title }}</h1>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="table-wrapper">
+      <div style="padding: 15px; background: #f3f4f6; display: flex; align-items: center;">
+        <input type="text" class="search-input" placeholder="Search stocks...">
+        <table>
+          <thead>
+            <tr>
+              <th>Stock</th>
+              <th>Current Price</th>
+              <th>Change %</th>
+              <th>Highest</th>
+              <th>Lowest</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for stock in stocks %}
+            <tr>
+              <td><strong>{{ stock.symbol }}</strong></td>
+              <td>${{ "%.2f"|format(stock.price) }}</td>
+              <td class="{{ 'change-positive' if stock.change_pct >= 0 else 'change-negative' }}">{{ "%.2f"|format(stock.change_pct) }}%</td>
+              <td>${{ "%.2f"|format(stock.high) }}</td>
+              <td>${{ "%.2f"|format(stock.low) }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn">Previous</button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <button class="page-btn">Next</button>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div>&copy; 2025 Aton Wealth Management. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Mock search functionality
+    document.querySelector('.search-input').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      // In real app, filter table rows here
+    });
+  </script>
+</body>
+</html>

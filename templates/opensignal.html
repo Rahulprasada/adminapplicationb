@@ -1,0 +1,452 @@
+<!-- templates/opensignal.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Aton Wealth Management — Open Signals</title>
+  <style>
+    /* ---------- Base ---------- */
+    :root{
+      --blue: #0a2540;
+      --accent: #ffd700;
+      --muted: #6b7280;
+      --success: #10b981;
+      --danger: #ef4444;
+      --card-bg: rgba(255,255,255,0.1);
+      --glass: rgba(255,255,255,0.05);
+      --radius: 12px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      background: #f9fafb;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+    }
+    .header-container{width:90%;max-width:1200px;margin:0 auto;padding:0 20px;}
+    .container{width:90%;max-width:1200px;margin:0 auto;padding:20px 0;}
+
+    /* ---------- Header / Navigation ---------- */
+    header.site-header{
+      background: var(--blue);
+      color: #fff;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    header.site-header .top-nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo{
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    nav.main-nav{
+      display: flex;
+      align-items: center;
+    }
+    nav.main-nav a{
+      color: rgba(255,255,255,0.9);
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: all 0.3s;
+      padding: 8px 16px;
+      border-radius: 20px;
+    }
+    nav.main-nav a:hover,
+    nav.main-nav a.active{
+      color: var(--accent);
+      background: rgba(255,215,0,0.1);
+    }
+
+    /* ---------- Hero / Market Summary ---------- */
+    .hero{
+      background: linear-gradient(135deg, var(--blue), #1e40af);
+      color: #fff;
+      padding: 80px 0 120px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmFkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxjaXJjbGUgY3g9IjIwIiBjeT0iMjAiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4xKSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIvPjwvc3ZnPg==') repeat;
+      opacity: 0.1;
+    }
+    .hero h1{
+      font-size: 40px;
+      margin: 0 0 15px;
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+    .hero p{
+      font-size: 18px;
+      margin: 0 0 30px;
+      opacity: 0.9;
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .market-summary{
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius);
+      padding: 25px;
+      margin: 0 auto;
+      max-width: 900px;
+      position: relative;
+      z-index: 1;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .market-summary strong{
+      color: var(--accent);
+    }
+    /* decorative wave */
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      height:100px;
+      bottom:0;
+      background: linear-gradient(180deg, transparent, #f9fafb);
+      transform: skewY(-2deg);
+      pointer-events:none;
+    }
+
+    /* ---------- Dashboard Controls ---------- */
+    .dashboard-controls{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 40px 0;
+      padding: 0 20px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .balance-section{
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .balance{
+      background: var(--accent);
+      color: var(--blue);
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+    }
+    .buy-credits{
+      background: linear-gradient(90deg, var(--accent), #ffcc00);
+      color: var(--blue);
+      padding: 12px 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(255,215,0,0.3);
+    }
+    .buy-credits:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255,215,0,0.4);
+    }
+    .filters{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-btn{
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .filter-btn.active,
+    .filter-btn:hover{
+      background: var(--accent);
+      color: var(--blue);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- Signals Grid ---------- */
+    .signals-grid{
+      display: grid;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .signal-card{
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      padding: 30px;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      position: relative;
+      transition: all 0.3s ease;
+      border: 1px solid #e5e7eb;
+    }
+    .signal-card::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+    }
+    .signal-card:hover{
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .signal-lock{
+      font-size: 32px;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .signal-content{
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .unlock-btn{
+      background: linear-gradient(90deg, var(--success), #059669);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+    }
+    .unlock-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16,185,129,0.4);
+    }
+    .signal-details{
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+    .detail-item{
+      text-align: center;
+      min-width: 80px;
+    }
+    .detail-label{
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      letter-spacing: 0.5px;
+    }
+    .detail-value{
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--blue);
+    }
+    .gain-positive{
+      color: var(--success);
+    }
+    .gain-negative{
+      color: var(--danger);
+    }
+    .arrow-up{
+      color: var(--success);
+      margin-left: 4px;
+    }
+    .arrow-down{
+      color: var(--danger);
+      margin-left: 4px;
+    }
+    .no-signals{
+      text-align: center;
+      padding: 100px 20px;
+      color: var(--muted);
+    }
+    .no-signals h3{
+      color: var(--blue);
+      margin-bottom: 15px;
+      font-size: 28px;
+    }
+    .no-signals p{
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    /* ---------- Footer ---------- */
+    footer.site-footer{
+      text-align: center;
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 14px;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 80px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px){
+      .dashboard-controls{
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+      .signal-card{
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+      .signal-details{
+        flex-direction: column;
+        gap: 20px;
+      }
+      .hero h1{font-size: 32px;}
+      .hero p{font-size: 16px;}
+      .filters{gap: 8px;}
+      .filter-btn{padding: 8px 16px; font-size: 13px;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <div class="top-nav">
+        <div class="logo">Aton Wealth Management</div>
+        <nav class="main-nav">
+          <a href="/" class="active">Home</a>
+          <a href="/opensignal">Open Signals</a>
+          <a href="/performance">Signal Performance</a>
+          <a href="/screener">Stock Screener</a>
+          <a href="/account">My Account</a>
+          <a href="/subscribe">Subscribe</a>
+          <a href="/admin">Admin</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero with Market Summary -->
+  <section class="hero">
+    <div class="container">
+      <h1>Open Signals Dashboard</h1>
+      <p>Unlock high-potential swing trades with our expert AI-driven recommendations. You're one step away from superior returns.</p>
+      <div class="market-summary">
+        <p>NASDAQ Composite Index: <strong>22,670.08</strong> +148.38 (+0.66%) | Total Shares Traded: over 4.56 billion | Declining stocks led advancers by 1.32 to 1 ratio. There were 1,886 advancers and 2,547 decliners for the day. After hours most active for Oct 16, 2025: NVDA, OXY, CSX, GRA.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Controls -->
+  <div class="container">
+    <div class="dashboard-controls">
+      <div class="balance-section">
+        <span class="balance">Swing Signals Balance: 1</span>
+        <a href="/subscribe" class="buy-credits">Buy Credits</a>
+      </div>
+      <div class="filters">
+        <button class="filter-btn active">All</button>
+        <button class="filter-btn">This Week</button>
+        <button class="filter-btn">Last Week</button>
+        <button class="filter-btn">Older</button>
+        <button class="filter-btn">FREE Signals</button>
+      </div>
+    </div>
+
+    <!-- Signals Grid -->
+    <div class="signals-grid">
+      {% if stocks %}
+        {% for stock in stocks %}
+        <div class="signal-card">
+          <span class="signal-lock">🔒</span>
+          <div class="signal-content">
+            <button class="unlock-btn">Unlock to View Signal</button>
+            <div class="signal-details">
+              <div class="detail-item">
+                <div class="detail-label">Risk</div>
+                <div class="detail-value">Medium</div>
+              </div>
+              {% set gain = ((stock.target - stock.entry_price) / stock.entry_price * 100) | round(1) %}
+              <div class="detail-item">
+                <div class="detail-label">Gain</div>
+                <div class="detail-value {{ 'gain-positive' if gain > 0 else 'gain-negative' }}">{{ gain }}% <span class="{{ 'arrow-up' if gain > 0 else 'arrow-down' }}">↑</span></div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">Sector</div>
+                <div class="detail-value">Financial Banks</div> <!-- Hardcoded for demo; can be dynamic -->
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="no-signals">
+          <h3>No Open Signals Available</h3>
+          <p>Check back soon for new opportunities or subscribe for premium access.</p>
+          <a href="/subscribe" class="buy-credits">Get Started</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div>&copy; 2025 Aton Wealth Management. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple filter functionality for demo
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        // In real app, fetch filtered data here
+      });
+    });
+
+    // Unlock button demo
+    document.querySelectorAll('.unlock-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm('Unlock this signal? (Demo)')) {
+          e.target.textContent = 'Unlocked!';
+          e.target.style.background = '#6ee7b7';
+          e.target.style.boxShadow = '0 4px 12px rgba(110,231,183,0.3)';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

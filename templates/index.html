@@ -329,6 +329,7 @@
       <nav>
         <a href="/">Home</a>
         <a href="/admin">Admin</a>
+        <a href="/opensignal">Open Signal</a>
       </nav>
     </div>
 
@@ -352,10 +353,10 @@
           <div class="sub-label">Winning trades</div>
         </div>
         <div class="metric">
-          <div class="num" id="m-calls">—</div>
+          <div class="num">2k+</div>
           <div class="label">Research Calls</div>
           <div class="sub-label">Published annually</div>
-        </div>
+        </div>        
         <div class="metric">
           <div class="num" id="m-years">15+</div>
           <div class="label">Years Experience</div>
@@ -527,7 +528,7 @@
         return;
       }
 
-      setMetric('m-calls', stocks.length + '+');
+      setMetric('m-calls', '2k+');
 
       const completed = stocks.filter(s => (s.status || '').toLowerCase() === 'completed');
       if (completed.length === 0) {
